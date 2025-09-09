@@ -1,15 +1,14 @@
 import { Module } from '@nestjs/common';
-import { RequestsController } from './requests.controller';
-import { RequestsService } from './requests.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ClientsModule, Transport } from '@nestjs/microservices';
+import { WorkerService } from './worker.service';
 import { ConfigModule } from '@nestjs/config';
-import { RequestEntity } from './request.entity';
+import { ClientsModule, Transport } from '@nestjs/microservices';
+import { WorkerController } from './worker.controller';
+import { RequestEntity } from './entities';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    TypeOrmModule.forFeature([RequestEntity]),
     ClientsModule.register([
       {
         name: 'RABBITMQ_CLIENT',
@@ -23,8 +22,9 @@ import { RequestEntity } from './request.entity';
         },
       },
     ]),
+    TypeOrmModule.forFeature([RequestEntity]),
   ],
-  controllers: [RequestsController],
-  providers: [RequestsService],
+  providers: [WorkerService],
+  controllers: [WorkerController],
 })
-export class RequestsModule {}
+export class WorkerModule {}

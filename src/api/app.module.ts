@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { RequestsModule } from './api/requests/requests.module';
-import { Request } from './api/requests/request.entity';
+import { RequestsModule } from './requests/requests.module';
+import { RequestEntity } from './requests/request.entity';
 
 @Module({
   imports: [
@@ -14,7 +14,7 @@ import { Request } from './api/requests/request.entity';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [Request],
+      entities: [RequestEntity],
       synchronize: false,
     }),
     RequestsModule,
